@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The first JS task</title>
+</head>
+<body>
+    <script>
+        let name, gender, age, email;
+        do {
+            name = (prompt("Enter your full name:"));
+            gender = (prompt("Enter your gender:"));
+            age = parseInt(prompt("Enter your age:", 18));
+            email = (prompt("Enter your email:")); 
+        }
+        while (confirm("Full Name: " + name + "\nGender: " + gender + "\nAge: " + age + "\nEmail: " + email + "\nConfirm?"));
+        alert("Thank you for your info!");
+    </script>
+</body>
+</html>
