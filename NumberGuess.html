@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess a number!</title>
+</head>
+<body>
+    <script>
+        let symb, numb, min = 0, max = 100;
+        alert("NUMBER GUESS\nLet me guess a number between 1 and 100")
+        do{
+            if (min > max){
+                alert("Number out of index! Let's try again")
+                min = 0;
+                max = 100;
+            }
+            else if (min == max){
+                alert(`Oh no, number is definitely ${max}!`)
+                break;
+            }
+            numb = Math.floor((max + min)/2)
+            symb = prompt(`Is your number >,< or = ${numb}?`)
+            switch(symb){
+                case ">":
+                    min = numb
+                    break;
+                case "<":
+                    max = numb;
+                    break;
+                default:
+                    alert("Invalid command!")
+            }
+        }while(symb != "=")
+        alert("YAAAAY")
+    </script>
+</body>
+</html>
