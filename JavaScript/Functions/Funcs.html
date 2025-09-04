@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funcs</title>
+    <script>
+        function stringFrom(){
+            let res = "";
+            for (let content of arguments){
+                res += ` ${String(content)} `
+            }
+            document.write(`<h2> ${res} </h2>`)
+        }
+
+        function min(){
+            let res = arguments[0];
+            for (let arg of arguments){
+                if (Number(res) > Number(arg)){
+                    res = arg
+                }
+            }
+            document.write(`<h3>The smallest value is ${res}(${Number(res)}) </h3>`)
+        }
+
+        function numbers(){
+            let count = 0;
+            for (let arg of arguments){
+                if (typeof arg == "number"){
+                    count++;
+                }
+            }
+            document.write(`<h3>Among arguments there were ${count} numbers</h3>`)
+        }
+
+        function mean(){
+            let res = 0, count = 0;
+            for (let arg of arguments){
+                if (typeof arg == "number"){
+                    res += Number(arg)
+                    count++
+                }
+            }
+            if (count != 0){
+                res /= count
+            }
+
+            document.write(`<h3>Average: ${res}</h3>`) 
+        }
+    </script>
+</head>
+<body>
+    <script>
+        stringFrom("Func #", 1)
+        stringFrom('I have',5, 'apples')
+        stringFrom('Х value is', true)
+
+        stringFrom("Func #", 2)
+        min("-2", 11, true, false)
+        min(true, 821, false)
+
+        stringFrom("Func #", 3)
+        numbers()
+        numbers(1, true, 2, 2077, "2077")
+        numbers(1, 2, "a")
+        numbers(true, 2, false)
+
+        stringFrom("Func #", 4)
+        mean()
+        mean (1, 2, "a")
+        mean(true, 2, false)
+    </script>
+</body>
+</html>
