@@ -1,11 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
     <title>Clock</title>
+    <style>
+        body {
+            background-color: black;
+        }
+        #clock{
+            border: 20px,rgb(19, 184, 129), ridge;
+            background-color: rgb(0, 56, 39);
+            justify-self: center;
+            padding: 20px;
+        }
+    </style>
+    <script>
+
+        function showTime() {
+            let now = new Date();
+            let h = now.getHours();
+            document.images["h1"].src = img[(h - (h % 10))/10];
+            document.images["h2"].src = img[h % 10]
+
+            let m = now.getMinutes();
+            document.images["m1"].src = img[(m - (m % 10))/10];
+            document.images["m2"].src = img[m % 10]
+
+            let s = now.getSeconds();
+            document.images["s1"].src = img[(s - (s % 10))/10];
+            document.images["s2"].src = img[s % 10]
+
+            if (points){
+                document.images["p1"].src = "IMG/blank.gif"
+                document.images["p2"].src = "IMG/blank.gif"
+                points = false
+            }
+            else{
+                document.images["p1"].src = "IMG/points.gif"
+                document.images["p2"].src = "IMG/points.gif"
+                points = true
+            }
+        }
+    </script>
 </head>
+
 <body>
-    
+    <div id="clock">
+        <img src="IMG/0.gif" id="h1">
+        <img src="IMG/0.gif" id="h2">
+        <img src="IMG/points.gif" id="p1">
+        <img src="IMG/0.gif" id="m1">
+        <img src="IMG/0.gif" id="m2">
+        <img src="IMG/points.gif" id="p2">
+        <img src="IMG/0.gif" id="s1">
+        <img src="IMG/0.gif" id="s2">
+    </div>
+    <script>
+        let points = true;
+        let img = new Array("IMG/0.gif", "IMG/1.gif","IMG/2.gif", "IMG/3.gif","IMG/4.gif", "IMG/5.gif","IMG/6.gif", "IMG/7.gif","IMG/8.gif", "IMG/9.gif")
+        setInterval("showTime()", 500);
+    </script>
 </body>
+
 </html>
