@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+</head>
+<body>
+    <script>
+    let questions = [], grade = 0, answer; 
+    questions["Do you like coffee?"] = "No"
+    questions["Do you like JavaScript?"] = "Yes"
+    questions["Do you prefer dark mode?"] = "Yes"
+    questions["Are you a morning person?"] = "No"
+    questions["Do you enjoy programming?"] = "Yes"
+
+    for (q in questions){
+        answer = prompt(q);
+        if (answer == questions[q]){
+            grade++;
+        }
+    }
+   result = `<h1> Your grade is ${grade}! </h1>`
+   switch(grade){
+    case 0:
+        document.write(result)
+        break;
+    case 1:
+        document.write(result.fontcolor("red"))
+        break;
+    case 2:
+        document.write(result.fontcolor("orange"))
+        break;
+    case 3:
+        document.write(result.fontcolor("yellow"))
+        break;
+    case 4:
+        document.write(result.fontcolor("lime"))
+        break;
+    case 5:
+        document.write(result.fontcolor("green"))
+        break;    
+   }
+    </script>
+</body>
+</html>
