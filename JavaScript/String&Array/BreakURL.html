@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Break your URL</title>
+</head>
+<body>
+    <script>
+        let url, index, protocol, host, path, file, query
+        url = prompt("Enter your link")
+
+        index = url.indexOf('://');
+        if (index !== -1) {
+            protocol = url.slice(0, index);
+            url = url.slice(index + 3);
+            document.write(`<p>Protocol [${protocol.fixed()}] </p>`.fontsize(15))            
+        }
+                
+        index = url.indexOf('/');
+        if (index === -1) {
+            host = url;
+        } else {
+            host = url.slice(0, index);
+            path = url.slice(index);
+                    
+            index = path.indexOf('?');
+            if (index !== -1) {
+                path = path.slice(0, index);
+                query = path.slice(index + 1);
+            }
+                    
+            index = path.lastIndexOf('/');
+            if (index !== -1) {
+                fileName = path.slice(index + 1);
+                path = path.slice(0, index + 1);
+            }
+        }
+
+        document.write(`<p>Host [${host.fixed()}] </p>`.fontsize(15))
+        document.write(`<p>Path [${path.fixed()}] </p>`.fontsize(15))
+        document.write(`<p>Name [${fileName.fixed()}] </p>`.fontsize(15))
+        document.write(`<p>Query [${query.fixed()}] </p>`.fontsize(15))
+    </script>
+</body>
+</html>
