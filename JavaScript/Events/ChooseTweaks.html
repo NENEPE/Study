@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books</title>
+    <style>
+        *{
+            padding: 5px 20px;
+        }
+        body {
+            background-color: darkred;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 20px;
+        }
+        .container {
+            display: flex;
+            justify-self: center;
+            width: fit-content;
+            border: 7px gold double;
+            border-radius: 10px;
+            background-color:antiquewhite;
+            user-select: none;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const books = document.querySelectorAll('.book');
+            let oldId = -1;
+            
+            for (let i = 0; i < books.length; i++) {
+                books[i].addEventListener('click', function(e) {
+                    e.preventDefault();
+                    BookClick(this, i, e);
+                });
+            }
+            
+            function BookClick(book, id, event) {
+                if (!event.ctrlKey && !event.shiftKey) {
+                    for (let i = 0; i < books.length; i++) {
+                        books[i].classList.remove('selected');
+                    }
+                    book.classList.add('selected');
+                    oldId = id;
+                }
+                
+                else if (event.ctrlKey && !event.shiftKey) {
+                    book.classList.toggle('selected');
+                    oldId = id;
+                }
+                
+                else if (event.shiftKey && oldId !== -1) {
+                    const start = Math.min(oldId, id);
+                    const end = Math.max(oldId, id);
+                    
+                    for (let i = start; i < end + 1; i++) {
+                            books[i].classList.add('selected');
+                    }
+                }
+                
+                const selectedBooks = document.querySelectorAll('.book.selected');
+                const allBooks = document.querySelectorAll('.book');
+
+                for (let i = 0; i < allBooks.length; i++) {
+                    allBooks[i].style.backgroundColor = '';
+                }
+    
+                for (let i = 0; i < selectedBooks.length; i++) {
+                    selectedBooks[i].style.backgroundColor = 'orange';
+                }  
+            }
+        });
+    </script>
+</head>
+<body>
+        
+        <div class="container">
+            <ol>
+                <li><span class="book">To Kill a Mockingbird by Harper Lee</span></li>
+                <li><span class="book">1984 by George Orwell</span></li>
+                <li><span class="book">Pride and Prejudice by Jane Austen</span></li>
+                <li><span class="book">The Great Gatsby by F. Scott Fitzgerald</span></li>
+                <li><span class="book">Moby Dick by Herman Melville</span></li>
+                <li><span class="book">Black Crow by Vasyl Shklar</span></li>
+                <li><span class="book">The Catcher in the Rye by J.D. Salinger</span></li>
+                <li><span class="book">The Lord of the Rings by J.R.R. Tolkien</span></li>
+                <li><span class="book">Brave New World by Aldous Huxley</span></li>
+                <li><span class="book">Kobzar by Taras Shevchenko</span></li>
+            </ol>
+        </div>
+</body>
+</html>

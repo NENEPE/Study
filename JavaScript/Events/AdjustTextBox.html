@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resizable Text Box</title>
+    <style>
+        body {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            background-color:antiquewhite;
+        }
+        
+        .container {
+            width: 300px;
+            height: 200px;
+            border: 4px dashed rgb(31, 7, 7);
+            padding: 15px;
+            margin: 20px;
+            position: relative;
+            overflow: auto;
+            resize: none;
+
+        }
+        
+        .resize {
+            border-left: 20px solid transparent;
+            border-bottom: 20px solid rgb(37, 37, 37);   
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            margin: 2px;
+            cursor: nwse-resize;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const box = document.getElementById('container');
+            const handle = document.getElementById('resizeBtn');
+            
+            let isResizing = false;
+            
+            handle.addEventListener('mousedown', function(e) {
+                isResizing = true;
+                e.preventDefault();
+            });
+            
+            document.addEventListener('mousemove', function(e) {
+                if (!isResizing) return;
+                
+                const newWidth = e.clientX - box.getBoundingClientRect().left;
+                const newHeight = e.clientY - box.getBoundingClientRect().top;
+                
+                if (newWidth > 150) {
+                    box.style.width = newWidth + 'px';
+                }
+                
+                if (newHeight > 100) {
+                    box.style.height = newHeight + 'px';
+                }
+            });
+            
+            document.addEventListener('mouseup', function() {
+                isResizing = false;
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container" id="container">
+            <span>
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur, quidem minima! Explicabo ab molestias natus itaque beatae numquam dolor ducimus, laboriosam maiores ratione qui? Ex sit dignissimos iure illo id minima autem fugit aspernatur qui, enim iste provident, facere nulla quia placeat. Eum fugiat eius nam obcaecati omnis impedit atque praesentium incidunt neque cumque qui, architecto animi commodi voluptatum nesciunt perferendis voluptatibus, odio esse. Possimus quos recusandae nihil, molestias ipsam quasi exercitationem, repellat perferendis maiores distinctio omnis nam delectus quam eligendi dolores adipisci magni tempore perspiciatis aliquid. Tenetur fuga dolor quas suscipit aut fugit soluta sint, cumque molestias voluptas saepe deleniti sapiente rerum, inventore non assumenda rem. Sunt odit quaerat repellat voluptates dicta obcaecati omnis nulla sequi debitis commodi, optio vitae iure eum alias? Pariatur ipsa laboriosam dolorum, maiores magni numquam nihil animi, voluptatum blanditiis eligendi adipisci asperiores consequuntur voluptas nesciunt dolores odit praesentium dicta cupiditate laudantium aliquid fuga recusandae voluptatibus. Ipsum soluta veritatis similique eum dolorum, molestiae alias asperiores harum doloribus mollitia ducimus id! Tempora amet fugiat dolores, consequatur, cupiditate culpa eaque, ducimus deleniti itaque tempore aliquid provident commodi aut. Cum quod necessitatibus id numquam qui architecto officia dignissimos nesciunt aliquam provident et perferendis asperiores facere itaque atque nulla totam sequi, quos hic praesentium doloribus eaque. Rerum laudantium voluptates sunt doloribus porro ea adipisci? Quas, laudantium hic illo, debitis quibusdam optio labore assumenda autem consequuntur culpa deserunt ad ex, nihil eligendi voluptatum! Earum non est porro rem quidem cumque vero velit veritatis nostrum distinctio consequatur, architecto similique vel? Sapiente quae ad minus reiciendis eius, debitis mollitia nisi, quas nostrum repellat pariatur soluta sunt optio, modi voluptate aliquid? Deserunt facere cupiditate laudantium explicabo fugit mollitia rerum provident fuga minus corrupti! Necessitatibus recusandae possimus, omnis voluptatum ratione rem itaque quisquam repudiandae, accusamus, hic nesciunt iste alias provident in temporibus voluptates praesentium quia ipsam facilis eligendi ullam excepturi at nisi. Ipsa exercitationem harum dolorum quisquam ipsam ea quo expedita corrupti, magnam quaerat temporibus laudantium quis voluptate, cumque consectetur deleniti illo placeat hic suscipit sed odio in voluptatum, provident debitis. Qui id doloremque molestias obcaecati, enim voluptatem laboriosam praesentium odio, minima, exercitationem porro vitae voluptas. Mollitia distinctio iure tempora aliquam temporibus incidunt illum, perferendis accusamus facilis nostrum blanditiis. Quibusdam libero inventore impedit. Est sint eos id recusandae iure, a cumque eius doloribus molestias hic voluptate non ipsam voluptates quod, dolore doloremque obcaecati corrupti laudantium placeat animi ipsum! Et dolorem maiores accusantium quasi consectetur nisi odio ipsum sapiente, at doloribus hic nobis placeat eveniet quo mollitia error corporis adipisci vel dolor? Illo natus, ad neque aliquid hic excepturi nisi accusantium illum distinctio consequuntur minima iure iusto omnis architecto ex reprehenderit odio culpa nulla aspernatur deserunt iste fugit vitae veniam. Libero ipsa praesentium, dignissimos animi quae hic atque quidem! Architecto, voluptatum saepe! Architecto, deleniti maiores nesciunt eligendi ducimus quod quia quaerat eos rem aliquam impedit cumque porro, eveniet dolore commodi ratione repudiandae debitis suscipit minus aperiam repellendus. Similique at quam omnis dicta? Placeat pariatur dolorem voluptatibus molestias quisquam. Eum harum, veritatis voluptatem ipsum expedita libero veniam impedit provident est facere rem ad officiis, doloribus, dignissimos deserunt quidem sunt sit velit voluptates possimus. Similique dolorum minus aliquam, iure asperiores facilis inventore, atque nam provident consectetur possimus nisi quos animi cupiditate? Cupiditate officia unde similique dolorem itaque totam atque repellendus? Nam, sit voluptatem sint vitae quibusdam ratione ab sed facilis esse corrupti magnam cumque. Sequi nulla odit, fugit quod veritatis necessitatibus corrupti. Magnam, vel ratione temporibus sint pariatur minima, quia dolor repellendus velit exercitationem incidunt maxime rerum error dolorum recusandae voluptatibus tempore laboriosam commodi aliquam cumque fugiat dolore. Quos, alias aperiam similique nulla commodi unde corrupti ab dolore tenetur dolorum quasi magni a, molestias consectetur eius ullam delectus deserunt optio perferendis, esse veritatis exercitationem explicabo! Reprehenderit et veritatis voluptatem soluta pariatur, odio molestiae exercitationem ut, voluptas velit ratione non doloremque aspernatur tenetur ad amet est animi quod? Blanditiis assumenda minima omnis perspiciatis iure quis quod suscipit tempore. Commodi necessitatibus ducimus quam at ex consectetur non sapiente ab aspernatur impedit quia saepe beatae, rem sint nesciunt praesentium pariatur animi suscipit nemo! Eius vitae rem labore nisi harum at similique quos magni qui aliquam dicta saepe error vel deserunt, sed animi amet doloremque. Ipsa iste quis odio corrupti ipsum in modi dicta consectetur. Voluptatibus, corporis cupiditate sequi obcaecati asperiores magni nemo non. Commodi sunt ratione optio et. Repellat quia alias reprehenderit odio nulla iusto explicabo commodi culpa tenetur sed deleniti odit inventore aliquam sit consectetur veritatis voluptates magni distinctio vel, quidem vitae. Quasi, nulla et. Quam praesentium distinctio nobis! Fuga minima distinctio deserunt temporibus rerum debitis inventore, magnam consequuntur recusandae expedita ex, sequi nam rem laudantium cumque, nobis delectus tempore omnis est iste ipsa libero! Ex quos aperiam ratione, sequi quod quas, ullam aliquid adipisci tenetur assumenda dolore sunt iure iusto ab voluptates debitis natus enim animi consequatur iste. Voluptatem perferendis debitis quisquam dolor provident ad ratione temporibus fugiat dignissimos! Odit blanditiis veniam cupiditate quasi vero reiciendis alias id temporibus similique culpa a, architecto non, animi, recusandae ipsam aspernatur labore ea? Nesciunt, explicabo ipsa illo dolorem minus molestias! Unde, id a doloribus beatae voluptates facilis sapiente eius totam laborum ipsa dolore amet maiores officia, perferendis nisi cum debitis. Incidunt, voluptatem? Similique quaerat quibusdam odit, quasi corporis eos quos illum possimus culpa doloribus placeat, veritatis laboriosam explicabo tempore nobis, eveniet accusamus minima sint corrupti. Rerum cum velit incidunt adipisci officiis, nemo suscipit, consequatur a voluptatibus deserunt corporis necessitatibus, sunt molestias recusandae error inventore perspiciatis eaque dolores. Molestias, enim aliquid commodi autem quas est nostrum, atque eveniet doloribus iure expedita aliquam! Magni odio iste modi assumenda quae recusandae, nemo itaque maxime dicta laudantium eligendi incidunt unde qui earum suscipit reiciendis veniam aperiam voluptas quod dolores quasi. Veniam reprehenderit magnam placeat, tempore quis necessitatibus vel minima dicta ad cupiditate maiores quaerat eum, ducimus rerum eaque eos expedita. Ab animi veniam blanditiis dolores neque consectetur voluptas quaerat numquam accusantium labore unde facere optio corrupti eos, ex aliquid quae fuga? Accusamus, soluta? Dicta soluta officia voluptas vero commodi impedit? Vel odio nihil alias iusto.
+        <div class="resize" id="resizeBtn"></div>
+    </div>
+</body>
+</html>

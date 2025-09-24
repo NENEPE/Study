@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drives</title>
+    <style type="text/css">
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: goldenrod;
+            color: aliceblue;
+        }
+        .container {
+            display: flex;
+            justify-self: center;
+            width:fit-content;
+            background-color: black;
+            border: 7px azure ridge;
+            margin: 10%;
+            padding-right: 20px;
+            user-select: none;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const folders = document.querySelectorAll('.folder');
+            
+            for (let i = 0; i < folders.length; i++) {
+                folders[i].addEventListener('click', function() {
+                    this.style.fontWeight = this.style.fontWeight === 'normal' ? 'bold' : 'normal';
+
+                    const item = this.nextElementSibling;
+                    if (item.tagName === 'UL') {
+                        item.style.display = item.style.display === 'none' ? 'block' : 'none';
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+            <ul>
+                <li>
+                    <div class="folder">
+                        <span>This PC</span>
+                    </div>
+                    <ul>
+                        <li>
+                            <div class="folder">
+                                <span>Local Disk (C:)</span>
+                            </div>
+                            <ul>
+                                <li>
+                                    <div class="folder">
+                                        <span>Program Files</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="folder">
+                                        <span>Users</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="folder">
+                                        <span>Windows</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <div class="folder">
+                                <span>Local Disk (D:)</span>
+                            </div>
+                            <ul>
+                                <li>
+                                    <div class="folder">
+                                        <span>New Folder 1</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="folder">
+                                        <span>New Folder 2</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="folder">
+                                        <span>New Folder 3</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <div class="folder">
+                                <span>Local Disk (E:)</span>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+    </div>
+</body>
+</html>
