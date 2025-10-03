@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Manager</title>
+    <style>
+      *{
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: bold;
+      }
+      body{
+        background-color: indigo;
+        color: aliceblue;      
+      }
+      .container{
+        display: flex;
+        justify-content: center;
+      }
+      .options{
+        border: 3px dotted aliceblue;
+        padding: 10px;
+        height: fit-content;
+      }
+      .option{
+        padding: 2px;
+      }
+      .option:first-of-type{
+        padding: 10px;
+      }
+      #create-btn{
+        display: flex;
+        justify-self: center;
+        padding: 7px;
+        margin-top: 7px;
+      }
+      #input{
+        padding: 5px;
+        cursor: text;
+      }
+      #list{
+        border: aliceblue ridge 5px;
+        margin: 10px;
+        background-color: green;
+        user-select: none;
+        width: fit-content;
+        height: fit-content;
+      }
+      li{
+        width: fit-content;
+        padding-right: 10px;
+        padding-bottom: 3px;
+        padding-top: 3px;
+      }
+      ul:hover, li:hover{
+        background-color: rgb(0, 59, 0);
+      }
+      ul, li, .option, #create-btn{
+        cursor: pointer;
+      }
+      .option:hover{
+        background-color: rgb(36, 0, 61);
+      }
+      .option:first-of-type{
+        background-color: indigo;
+      }
+      #create-btn:hover{
+        background-color: greenyellow;
+      }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="options">
+            <div class="option">
+                <input type="text" id="input" placeholder="Enter item text">
+            </div>
+
+            <div class="option">
+                <input type="radio" name="action" value="add">
+                <label>Add to End</label>
+            </div>
+            
+            <div class="option">
+                <input type="radio" name="action" value="insert">
+                <label>Insert Before</label>
+            </div>
+
+            <div class="option">
+                <input type="radio" name="action" value="change">
+                <label>Change Text</label>
+            </div>
+            
+            <div class="option">
+                <input type="radio" name="action" value="add-sub">
+                <label>Add Sub-List</label>
+            </div>
+            
+            <div class="option">
+                <input type="radio" name="action" value="remove">
+                <label>Remove Item</label>
+            </div>
+            
+            <button id="create-btn">Add New List</button>
+        </div>
+        
+        <div id="list"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const listContainer = document.getElementById('list');
+            const input = document.getElementById('input');
+            const radioBtns = document.querySelectorAll('input[name="action"]');
+            const createListBtn = document.getElementById('create-btn');
+            
+            let selectedAction = null;
+            
+            radioBtns.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    selectedAction = this.value;
+                });
+            });
+            
+            createListBtn.addEventListener('click', function() {
+                const ul = document.createElement('ul');
+                const li = createListItem('New List');
+                ul.appendChild(li);
+                listContainer.appendChild(ul);
+            });
+            
+            function createListItem(text) {
+                const li = document.createElement('li');
+                li.textContent = text;
+                
+                li.addEventListener('click', function(e) {
+                    const text = input.value;
+                    input.value = '';
+                    switch(selectedAction) {
+                        case 'change':
+                            if (text) {
+                                this.textContent = text;
+                            }
+                            break;
+                            
+                        case 'add':
+                            if (text) {
+                                const newLi = createListItem(text);
+                                this.parentNode.appendChild(newLi);
+                            }
+                            break;
+                            
+                        case 'insert':
+                            if (text) {
+                                const newLi = createListItem(text);
+                                this.parentNode.insertBefore(newLi, this);
+                            }
+                            break;
+                            
+                        case 'add-sub': 
+                            if (text) {
+                                const ul = document.createElement('ul');
+                                const li = createListItem(text);
+                                ul.appendChild(li);
+                                this.appendChild(ul);
+                            }
+                            break;
+                            
+                        case 'remove':
+                            this.remove();
+                            break;
+                    }
+                });
+                
+                return li;
+            }
+        });
+    </script>
+</body>
+</html>
