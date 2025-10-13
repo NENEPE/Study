@@ -1,0 +1,30 @@
+﻿<div class="container">
+    <h3>Top 11 movies</h3>
+    <h6>Just because i can</h6>
+    <table class="movies-list">
+        @foreach (var m in ViewBag.Movies)
+        {
+            <tr>
+                <td><img src="~/img/@(m.Poster).png" alt="@m.Title" class="poster" /></td>
+                <td>
+                    <p class="title">@m.Title</p>
+                    <div class="movie-details-grid">
+                        <div class="detail-item">
+                            <span class="detail-label">Director:</span>
+                            <span class="detail-value">@m.Director</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Release Year:</span>
+                            <span class="detail-value">@m.ReleaseYear</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Genre:</span>
+                            <span class="detail-value">@m.Genre</span>
+                        </div>
+                    </div>
+                    <p class="desc">@m.Desc</p>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
