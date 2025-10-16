@@ -1,28 +1,37 @@
-﻿<div class="container">
+﻿@model IEnumerable<MoviesMVC.Models.Movie>
+
+<div class="container">
     <h3>Top 11 movies</h3>
     <h6>Just because i can</h6>
+	<a asp-action="Create" class="btn">Add New Movie</a>
     <table class="movies-list">
-        @foreach (var m in ViewBag.Movies)
+        @foreach (var m in Model)
         {
             <tr>
-                <td><img src="~/img/@(m.Poster).png" alt="@m.Title" class="poster" /></td>
+                <td><img src="@Html.DisplayFor(_ => m.Poster)" alt="@m.Title" class="poster" /></td>
                 <td>
-                    <p class="title">@m.Title</p>
+                    <p class="title">@Html.DisplayFor(_ => m.Title)</p>
                     <div class="movie-details-grid">
                         <div class="detail-item">
-                            <span class="detail-label">Director:</span>
-                            <span class="detail-value">@m.Director</span>
+                            <span class="detail-label">@Html.DisplayNameFor(_ => m.Director):</span>
+                            <span class="detail-value">@Html.DisplayFor(_ => m.Director)</span>
                         </div>
                         <div class="detail-item">
                             <span class="detail-label">Release Year:</span>
-                            <span class="detail-value">@m.ReleaseYear</span>
+                            <span class="detail-value">@Html.DisplayFor(_ => m.ReleaseYear)</span>
                         </div>
                         <div class="detail-item">
-                            <span class="detail-label">Genre:</span>
-                            <span class="detail-value">@m.Genre</span>
+                            <span class="detail-label">@Html.DisplayNameFor(_ => m.Genre):</span>
+                            <span class="detail-value">@Html.DisplayFor(_ => m.Genre)</span>
                         </div>
                     </div>
-                    <p class="desc">@m.Desc</p>
+                    <p class="desc">@Html.DisplayFor(_ => m.Desc)</p>
+                    <div class="btns">
+                        <a asp-action="Details" asp-route-id="@m.Id" class="largerBtn">Details</a>
+                        <a asp-action="Edit" asp-route-id="@m.Id" class="largerBtn">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@m.Id" class="largerBtn">Delete</a>
+                    </div>
+
                 </td>
             </tr>
         }

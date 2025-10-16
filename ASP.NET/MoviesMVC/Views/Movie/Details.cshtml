@@ -1,0 +1,47 @@
+﻿@model MoviesMVC.Models.Movie
+<h3>Details</h3>
+<h6>If you needed to see the same info but in a bigger window</h6>
+<hr />
+<div class="details-container">
+    <img src="@(@Html.DisplayFor(model => model.Poster))" alt="@Model?.Title" class="poster" />
+    <dl>
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Genre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Genre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ReleaseYear)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ReleaseYear)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Director)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Director)
+        </dd>
+        <dt>
+			@Html.DisplayNameFor(model => model.Desc)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Desc)
+        </dd>
+        <div class="btns">
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="largerBtn">Edit</a>
+            <a asp-action="Delete" asp-route-id="@Model?.Id" class="largerBtn">Delete</a>
+            <a asp-action="Index" class="largerBtn">Back to List</a>
+        </div>
+    </dl>
+</div>
+<div>
+   
+</div>

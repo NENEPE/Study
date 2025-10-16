@@ -1,16 +1,16 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 .navbar {
@@ -25,7 +25,7 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
-h3 {
+h3, h4 {
     color: #6f6cff;
     font-family: Minecraft;
     font-size: 100px;
@@ -68,21 +68,21 @@ span {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.movies-list tr {
+.movies-list tr, .row{
     border-radius: 12px;
     margin: 20px;
     background-color: #4a5a8a;
 }
 
-.movies-list tr:nth-child(odd) {
-    display: flex;
-    flex-direction: row;
-}
+    .movies-list tr:nth-child(odd) {
+        display: flex;
+        flex-direction: row;
+    }
 
-.movies-list tr:nth-child(even) {
-    display: flex;
-    flex-direction: row-reverse;
-}
+    .movies-list tr:nth-child(even) {
+        display: flex;
+        flex-direction: row-reverse;
+    }
 
 .movie-details-grid {
     display: flex;
@@ -95,7 +95,7 @@ span {
 .detail-item {
     font-size: 18px;
     display: contents;
-    width:fit-content;
+    width: fit-content;
 }
 
 .detail-label {
@@ -106,6 +106,7 @@ span {
     font-size: 20px;
     text-align: justify;
     margin: 15px;
+    margin-bottom: 0;
     line-height: 1.6;
     background: rgba(42, 50, 74, 0.6);
     padding: 20px;
@@ -125,3 +126,93 @@ footer {
     text-align: center;
     padding: 20px;
 }
+
+.movies-list .row {
+    display: flex;
+    justify-self: center;
+    padding: 10px;
+    
+}
+
+.form-control:focus {
+    border: #6f6cff 3px solid;
+    box-shadow: 0 0 10px rgba(111, 108, 255, 0.5);
+}
+
+.form-group {
+    width: max-content;
+}
+
+    .form-group:last-of-type {
+        margin:20px 40px;
+    }
+
+.form-control {
+    width: 300px;
+}
+
+.btn, .largerBtn {
+    width: fit-content;
+    font-size: large;
+    margin: 10px 5px;
+    padding: 10px;
+    background-color: #6f6cff;
+    color: aliceblue;
+    border-radius: 8px;
+}
+
+    .btn:hover, .largerBtn:hover {
+        background-color: aliceblue;
+        color: #6f6cff;
+    }
+
+.btns {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    gap: 20px;
+    margin: 10px 0 ;
+}
+
+.details-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: #4a5a8a;
+}
+
+.details-container .poster {
+    max-width: 400px;
+    height: auto;
+    margin: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+    .details-container dl {
+        margin: 15px;
+        padding: 20px;
+        border-radius: 12px;
+        background-color: #3a4564;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .details-container dd {
+        margin: 0 0 10px 0;
+        font-size: 18px;
+    }
+
+    .largerBtn {
+        font-size: larger;
+    }
+
+    .btn-danger{
+        background-color: red;
+    }
+
+    .btn-danger:hover{
+        background-color: darkred;
+        color: white;
+    }

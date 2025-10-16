@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Movies;
-using MoviesMVC;
+using MoviesMVC.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
