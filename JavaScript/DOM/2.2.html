@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paragraphs</title>
+    <style>
+        body {
+            color: #e4fcfc;
+            background-color: #b3c1d1;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container, .title{
+            border: #262b52 5px solid;
+            background-color: #5a6fad;
+        }
+        .title{
+            padding: 5px;
+        }
+        .section p{
+            display: none;
+        }
+        p {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="section">
+            <div class="title" onclick="display(this)">What is STALKER 2?</div>
+            <p>S.T.A.L.K.E.R. 2: Heart of Chornobyl (Ukrainian: S.T.A.L.K.E.R. 2: Серце Чорнобиля) is a 2024 single-player first-person shooter, survival horror video game developed and published by GSC Game World. It is the fourth main game released in the S.T.A.L.K.E.R. video game series, as well as the first S.T.A.L.K.E.R. game in 15 years since the release of Call of Pripyat in 2009.</p>
+        </div>
+        <div class="section">
+            <div class="title" onclick="display(this)">Gameplay</div>
+            <p>S.T.A.L.K.E.R. 2: Heart of Chornobyl is a first-person shooter with survival horror es. It takes place in the post-apocalyptic exclusion zone of Chernobyl Nuclear Power Plant. The game world is divided into several territories, some of which are initially inaccessible.</p>
+        </div>
+        <div class="section">
+            <div class="title" onclick="display(this)">Plot</div>
+            <p>Yevhen "Skif" Martynenko, a veteran of the Ukrainian Marine Corps, has returned from a 3-year deployment in an unspecified conflict. He awakens to find his apartment has been destroyed by an anomaly that has mysteriously appeared outside of the Zone, leaving an unknown artifact in its wake. Looking to earn money for a new home, he is smuggled into the Zone by a scientist, Professor Hermann, along with a piece of technology called the 'Scanner' that creates local anomalies and can apparently "recharge" depleted artifacts. Venturing into the Zone, he finds his initial team he was to make contact with have been killed and sets out alone to use the Scanner in special coordinates where it works. On the third and successful attempt, he is interrupted by an investigation from soldiers of the faction called 'Ward', dedicated to controlling the Zone and stopping its expansion. The soldiers themselves are killed by an unknown third party, who steal Skif's belongings and knock him unconscious.
+            </p>
+        </div>
+    </div>
+</body>
+<script>
+        function display(e) {
+            const paragraph = e.nextElementSibling;
+            const paragraphs = document.querySelectorAll("p")
+
+            paragraphs.forEach(p => {
+                p.style.display = "none"
+            })
+            
+                paragraph.style.display = "block";
+        }
+</script>
+</html>

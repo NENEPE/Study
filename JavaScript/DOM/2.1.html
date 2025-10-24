@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Name Input :)</title>
+    <style>
+        body {
+            background-color:#cac59a;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 50px;
+        }
+        .container{
+            width: fit-content;
+            display: flex;
+            justify-items: center;
+            justify-self: center;
+            align-items: center;
+            flex-direction: column;
+            background-color:#6c7b95;
+            border: #355c6c ridge 15px;
+            color: #19c9a8;
+            padding: 10px;
+        }
+        h4 {color:#088068}
+        #warn {
+            color: #ce6461;
+            display: none;
+        }
+        input{
+            font-size: larger;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Enter your name</h1>
+        <h4>Just don't put any numbers</h4>
+        <input type="text">
+        <h5 id="warn">I SAID DON'T PUT ANY NUMBERS</h5>
+    </div>
+</body>
+<script>
+    function NumbCheck(e){
+        let warn = document.getElementById("warn");
+
+        if (e.keyCode >= 48 && e.keyCode <= 57) {
+            e.preventDefault();
+            warn.style.display = "block";
+        } else {
+            warn.style.display = "none";
+        }
+    }
+
+     document.body.addEventListener("keydown", NumbCheck);
+</script>
+</html>
