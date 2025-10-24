@@ -9,6 +9,7 @@
             color: #e4fcfc;
             background-color: #b3c1d1;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none;            
         }
         .container, .title{
             border: #262b52 5px solid;
@@ -16,6 +17,7 @@
         }
         .title{
             padding: 5px;
+            cursor: pointer;
         }
         .section p{
             display: none;
@@ -46,12 +48,15 @@
         function display(e) {
             const paragraph = e.nextElementSibling;
             const paragraphs = document.querySelectorAll("p")
+            const showing = paragraph.style.display === "block"
 
             paragraphs.forEach(p => {
                 p.style.display = "none"
             })
             
-                paragraph.style.display = "block";
+            if (!showing) {
+                paragraph.style.display = "block"
+            }
         }
 </script>
 </html>

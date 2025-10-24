@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table</title>
+    <style>
+        body {
+            background-color: #7959a7;
+            font-family: Arial, sans-serif;
+            width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            color: #c993c0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #870ac4;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        th:hover {
+            background-color: #440494;
+        }
+        
+        tr:hover {
+            background-color: #440494;
+        }
+        
+        td{
+            border: 1px solid #df3cc0;
+        }
+    </style>
+</head>
+<body>
+    <table id="table">
+        <h1>Sortable Table</h1>
+        <thead>
+            <tr>
+                <th data-sort="firstname">First Name</th>
+                <th data-sort="lastname">Last Name</th>
+                <th data-sort="age">Age</th>
+                <th data-sort="company">Company</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Mark</td>
+                <td>Zuckerberg</td>
+                <td>34</td>
+                <td>Facebook</td>
+            </tr>
+            <tr>
+                <td>Larry</td>
+                <td>Page</td>
+                <td>45</td>
+                <td>Google</td>
+            </tr>
+            <tr>
+                <td>Timothy</td>
+                <td>Cook</td>
+                <td>57</td>
+                <td>Apple</td>
+            </tr>
+            <tr>
+                <td>Bill</td>
+                <td>Gates</td>
+                <td>62</td>
+                <td>Microsoft</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        const table = document.getElementById('table');
+        const headers = table.querySelectorAll('th');
+        const tbody = table.querySelector('tbody');
+        
+        headers.forEach(header => {
+            header.addEventListener('click', () => {
+                const columnId = Array.from(headers).indexOf(header);
+                const rows = Array.from(tbody.querySelectorAll('tr'));
+                const numb = header.getAttribute('data-sort') === 'age';
+                const bigger = !header.classList.contains('sort-asc');
+                
+                headers.forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
+
+                rows.sort((rowA, rowB) => {
+                    const cellA = rowA.cells[columnId].textContent;
+                    const cellB = rowB.cells[columnId].textContent;
+                    
+                    let a = numb ? parseInt(cellA) : cellA;
+                    let b = numb ? parseInt(cellB) : cellB;
+                    
+                    if (a < b) return bigger ? -1 : 1;
+                    if (a > b) return bigger ? 1 : -1;
+                    return 0;
+                });
+                
+                rows.forEach(row => tbody.appendChild(row));
+
+                header.classList.add(bigger ? 'sort-asc' : 'sort-desc');
+            });
+        });
+    </script>
+</body>
+</html>
