@@ -1,0 +1,41 @@
+﻿@model MusicPortal.Models.SongViewModel
+
+<h2>@Resources.Resource.CreateSong</h2>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data" class="col-md-6">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label">@Resources.Resource.SongTitle</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Artist" class="form-label">@Resources.Resource.Artist</label>
+        <input asp-for="Artist" class="form-control" />
+        <span asp-validation-for="Artist" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="GenreId" class="form-label">@Resources.Resource.Genre</label>
+        <select asp-for="GenreId" asp-items="Model.Genres" class="form-control">
+            <option value="">-- Select Genre --</option>
+        </select>
+        <span asp-validation-for="GenreId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="MusicFile" class="form-label">@Resources.Resource.File</label>
+        <input asp-for="MusicFile" type="file" class="form-control" accept="audio/*" name="@Resources.Resource.File">
+        <span asp-validation-for="MusicFile" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">@Resources.Resource.CreateSong</button>
+</form>

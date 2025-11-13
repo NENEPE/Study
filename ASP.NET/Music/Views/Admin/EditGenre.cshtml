@@ -1,0 +1,65 @@
+﻿@model MusicPortal.Models.Genre
+
+@{
+    ViewData["Title"] = @Resources.Resource.EditGenre;
+}
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">
+            <i class="fas fa-edit me-2"></i>@Resources.Resource.EditGenre
+        </h1>
+        <a href="@Url.Action("Genres")" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">
+            <i class="fas fa-arrow-left me-1"></i>@Resources.Resource.BackTo
+        </a>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-primary">Edit Genre Information</h6>
+                    <span class="badge bg-info">@Model.Songs.Count @Resources.Resource.SongsInGenre</span>
+                </div>
+                <div class="card-body">
+                    <form asp-action="EditGenre" method="post">
+                        <input type="hidden" asp-for="Id" />
+
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                        <div class="form-group mb-4">
+                            <label asp-for="Name" class="form-label fw-bold">@Resources.Resource.Title</label>
+                            <input asp-for="Name" class="form-control form-control-lg" />
+                            <span asp-validation-for="Name" class="text-danger small"></span>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label asp-for="Description" class="form-label fw-bold">@Resources.Resource.Desc</label>
+                            <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                            <span asp-validation-for="Description" class="text-danger small"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button type="submit" class="btn btn-primary btn-lg">
+									<i class="fas fa-save me-2"></i>@Resources.Resource.Save
+                                </button>
+                                <a href="@Url.Action("Genres")" class="btn btn-secondary btn-lg">
+									<i class="fas fa-times me-2"></i>@Resources.Resource.Cancel
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#Name').focus();
+        });
+    </script>
+}

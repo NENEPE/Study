@@ -1,0 +1,134 @@
+﻿@model MusicPortal.Models.RegisterViewModel
+
+@{
+    ViewData["Title"] = Resources.Resource.Register;
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-lg">
+            <div class="card-header bg-primary text-white text-center py-4">
+                <h2><i class="fas fa-user-plus me-2"></i>@Resources.Resource.Register</h2>
+                <p class="mb-0">@Resources.Resource.RegisterWelcome</p>
+            </div>
+            <div class="card-body p-5">
+                <form asp-action="Register" method="post" id="registerForm">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                    <div class="mb-4">
+                        <label asp-for="Username" class="form-label fw-bold">@Resources.Resource.Username</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light">
+                                <i class="fas fa-user text-primary"></i>
+                            </span>
+                            <input asp-for="Username" class="form-control form-control-lg"
+                                   placeholder="@Resources.Resource.Username" />
+                        </div>
+                        <span asp-validation-for="Username" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Email" class="form-label fw-bold">@Resources.Resource.Email</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light">
+                                <i class="fas fa-envelope text-primary"></i>
+                            </span>
+                            <input asp-for="Email" class="form-control form-control-lg"
+                                   placeholder="@Resources.Resource.Email" />
+                        </div>
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Password" class="form-label fw-bold">@Resources.Resource.Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light">
+                                <i class="fas fa-lock text-primary"></i>
+                            </span>
+                            <input asp-for="Password" type="password" class="form-control form-control-lg"
+                                   placeholder="@Resources.Resource.Password" id="passwordInput" />
+                            <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                                <i class="fas fa-eye" id="toggleIcon"></i>
+                            </button>
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="ConfirmPassword" class="form-label fw-bold">@Resources.Resource.ConfirmPassword</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light">
+                                <i class="fas fa-lock text-primary"></i>
+                            </span>
+                            <input asp-for="ConfirmPassword" type="password" class="form-control form-control-lg"
+                                   placeholder="@Resources.Resource.ConfirmPassword" id="confirmPasswordInput" />
+                            <button type="button" class="btn btn-outline-secondary" id="toggleConfirmPassword">
+                                <i class="fas fa-eye" id="toggleConfirmIcon"></i>
+                            </button>
+                        </div>
+                        <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-grid mb-4">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-user-plus me-2"></i>@Resources.Resource.Register
+                        </button>
+                    </div>
+
+                    <div class="text-center">
+                        <hr class="my-4">
+                        <p class="text-muted">@Resources.Resource.LoginCheck</p>
+                        <a asp-action="Login" class="btn btn-outline-success btn-lg">
+                            <i class="fas fa-sign-in-alt me-2"></i>@Resources.Resource.Login
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Toggle password visibility
+            $('#togglePassword').click(function () {
+                const passwordInput = $('#passwordInput');
+                const type = passwordInput.attr('type') === 'password' ? 'text' : 'password';
+                passwordInput.attr('type', type);
+
+                const toggleIcon = $('#toggleIcon');
+                toggleIcon.toggleClass('fa-eye fa-eye-slash');
+            });
+
+            // Toggle confirm password visibility
+            $('#toggleConfirmPassword').click(function () {
+                const confirmPasswordInput = $('#confirmPasswordInput');
+                const type = confirmPasswordInput.attr('type') === 'password' ? 'text' : 'password';
+                confirmPasswordInput.attr('type', type);
+
+                const toggleConfirmIcon = $('#toggleConfirmIcon');
+                toggleConfirmIcon.toggleClass('fa-eye fa-eye-slash');
+            });
+
+            // Form validation styling
+            $('input').on('blur', function () {
+                if ($(this).val().trim() !== '') {
+                    $(this).addClass('is-valid');
+                } else {
+                    $(this).removeClass('is-valid');
+                }
+            });
+
+            // Focus on username field
+            $('#Username').focus();
+
+            // Submit form on Enter key
+            $('#registerForm').on('keypress', function (e) {
+                if (e.which === 13) {
+                    $(this).submit();
+                }
+            });
+        });
+    </script>
+}

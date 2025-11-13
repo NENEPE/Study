@@ -1,0 +1,109 @@
+﻿@model IEnumerable<MusicPortal.Models.User>
+
+@{
+    ViewData["Title"] = Resources.Resource.Users;
+}
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">
+            <i class="fas fa-users me-2"></i>@Resources.Resource.Users
+        </h1>
+        <a href="@Url.Action("Index")" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">
+            <i class="fas fa-arrow-left me-1"></i>@Resources.Resource.BackTo
+        </a>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <span class="badge bg-primary">@Model.Count() @Resources.Resource.TotalUsers</span>
+        </div>
+        <div class="card-body">
+            @if (!Model.Any())
+            {
+                <div class="text-center py-4">
+                    <i class="fas fa-users fa-3x text-gray-300 mb-3"></i>
+                    <h5 class="text-gray-500">@Resources.Resource.NoUsers</h5>
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover" id="usersTable" width="100%" cellspacing="0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>@Resources.Resource.Username</th>
+                                <th>@Resources.Resource.Email</th>
+                                <th>@Resources.Resource.Status</th>
+                                <th>@Resources.Resource.Role</th>
+                                <th>@Resources.Resource.Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var user in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <strong>@user.Username</strong>
+                                        @if (user.IsAdmin)
+                                        {
+                                            <span class="badge bg-danger ms-1">ADMIN</span>
+                                        }
+                                    </td>
+                                    <td>@user.Email</td>
+                                    <td>
+                                        @if (user.IsActive)
+                                        {
+                                            <span class="badge bg-success">@Resources.Resource.Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-warning text-dark">@Resources.Resource.Pending</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (user.IsAdmin)
+                                        {
+                                            <span class="badge bg-danger">@Resources.Resource.Admin</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">@Resources.Resource.User</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            @if (!user.IsActive)
+                                            {
+                                                <form method="post" action="@Url.Action("ActivateUser")" class="d-inline">
+                                                    <input type="hidden" name="id" value="@user.Id" />
+                                                    @Html.AntiForgeryToken()
+                                                    <button type="submit" class="btn btn-success btn-sm"
+                                                            title="@Resources.Resource.ActivateUser" onclick="return confirm(@Resources.Resource.Question)">
+                                                        <i class="fas fa-check"></i>
+                                                    </button>
+                                                </form>
+                                            }
+
+                                            @if (user.Id != 1)
+                                            {
+                                                <form method="post" action="@Url.Action("DeleteUser")" class="d-inline">
+                                                    <input type="hidden" name="id" value="@user.Id" />
+                                                    @Html.AntiForgeryToken()
+                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                            title="@Resources.Resource.Delete" onclick="return confirm(@Resources.Resource.Question)">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>
