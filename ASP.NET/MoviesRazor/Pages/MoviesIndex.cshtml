@@ -1,0 +1,43 @@
+﻿@page
+@model MoviesRazor.Pages.MoviesIndexModel
+@{
+	ViewData["Title"] = "Movies List";
+}
+
+<div class="container">
+    <h3>Top 11 movies</h3>
+    <h6>Just because i can</h6>
+	<a asp-page="/Create" class="btn">Add New Movie</a>
+    <table class="movies-list">
+        @foreach (var m in Model.Movie)
+        {
+            <tr>
+                <td><img src="@Html.DisplayFor(_ => m.Poster)" alt="@m.Title" class="poster" /></td>
+                <td>
+                    <p class="title">@Html.DisplayFor(_ => m.Title)</p>
+                    <div class="movie-details-grid">
+                        <div class="detail-item">
+                            <span class="detail-label">@Html.DisplayNameFor(_ => m.Director):</span>
+                            <span class="detail-value">@Html.DisplayFor(_ => m.Director)</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Release Year:</span>
+                            <span class="detail-value">@Html.DisplayFor(_ => m.ReleaseYear)</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">@Html.DisplayNameFor(_ => m.Genre):</span>
+                            <span class="detail-value">@Html.DisplayFor(_ => m.Genre)</span>
+                        </div>
+                    </div>
+                    <p class="desc">@Html.DisplayFor(_ => m.Desc)</p>
+                    <div class="btns">
+                        <a asp-page="\Details" asp-route-id="@m.Id" class="largerBtn">Details</a>
+                        <a asp-page="\Edit" asp-route-id="@m.Id" class="largerBtn">Edit</a>
+                        <a asp-page="\Delete" asp-route-id="@m.Id" class="largerBtn">Delete</a>
+                    </div>
+
+                </td>
+            </tr>
+        }
+    </table>
+</div>

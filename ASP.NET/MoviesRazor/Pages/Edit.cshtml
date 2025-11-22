@@ -1,0 +1,61 @@
+﻿@page
+@model MoviesRazor.Pages.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="movies-list" style="padding:20px">
+	<h3>Edit a Movie</h3>
+	<hr />
+	<div class="row">
+		<div class="col-md-4">
+			<form method="post" enctype="multipart/form-data">
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+				<input type="hidden" asp-for="Movie.Id" />
+				<div class="form-group">
+					<label asp-for="Movie.Title" class="control-label"></label>
+					<input asp-for="Movie.Title" class="form-control" />
+					<span asp-validation-for="Movie.Title" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Movie.Genre" class="control-label"></label>
+					<input asp-for="Movie.Genre" class="form-control" />
+					<span asp-validation-for="Movie.Genre" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Movie.ReleaseYear" class="control-label"></label>
+					<input asp-for="Movie.ReleaseYear" class="form-control" />
+					<span asp-validation-for="Movie.ReleaseYear" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Movie.Director" class="control-label"></label>
+					<input asp-for="Movie.Director" class="form-control" />
+					<span asp-validation-for="Movie.Director" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Movie.Desc" class="control-label"></label>
+					<input asp-for="Movie.Desc" class="form-control" />
+					<span asp-validation-for="Movie.Desc" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Movie.Poster" class="control-label"></label>
+					<img src="@Model.Movie.Poster" alt="@Model.Movie.Title" class="poster" style="width:100px" />
+					<input type="hidden" asp-for="Movie.Poster" />
+					<input type="file" name="file" asp-for="Movie.Poster" class="form-control" />
+					<span asp-validation-for="Movie.Poster" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<input type="submit" value="Save" class="btn"/> | <a asp-page="\MoviesIndex" class="btn">Back to List</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

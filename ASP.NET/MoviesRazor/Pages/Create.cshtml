@@ -1,0 +1,57 @@
+﻿@page
+@model MoviesRazor.Pages.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+        
+<div class="movies-list" style="padding:20px">
+	<h4>Add a new Movie to your list</h4>
+	<hr />
+	<div class="row">
+		<div class="col-md-4">
+			<form asp-action="Create" method="post" enctype="multipart/form-data">
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+				<div class="form-group">
+					<label asp-for="Movie.Title" class="control-label"></label>
+					<input asp-for="Movie.Title" class="form-control" />
+					<span asp-validation-for="Movie.Title" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Movie.Genre" class="control-label"></label>
+					<input asp-for="Movie.Genre" class="form-control" />
+					<span asp-validation-for="Movie.Genre" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Movie.ReleaseYear" class="control-label"></label>
+					<input asp-for="Movie.ReleaseYear" class="form-control" />
+					<span asp-validation-for="Movie.ReleaseYear" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Movie.Director" class="control-label"></label>
+					<input asp-for="Movie.Director" class="form-control" />
+					<span asp-validation-for="Movie.Director" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Movie.Desc" class="control-label"></label>
+					<input asp-for="Movie.Desc" class="form-control" />
+					<span asp-validation-for="Movie.Desc" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Movie.Poster" class="control-label"></label>
+					<span asp-validation-for="Movie.Poster" class="text-danger"></span>
+					<input type="file" name="file" asp-for="Movie.Poster" class="form-control" />
+				</div>
+				<div class="form-group">
+					<input type="submit" value="Create" class="btn" /> | <a asp-page="\MoviesIndex" class="btn">Back to List</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

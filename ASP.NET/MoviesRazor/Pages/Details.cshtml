@@ -1,0 +1,50 @@
+﻿@page
+@model MoviesRazor.Pages.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h3>Details</h3>
+<h6>If you needed to see the same info but in a bigger window</h6>
+<hr />
+<div class="details-container">
+    <img src="@(@Html.DisplayFor(model => model.Movie.Poster))" alt="@Model?.Movie.Title" class="poster" />
+    <dl>
+        <dt>
+            @Html.DisplayNameFor(model => model.Movie.Title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Movie.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Movie.Genre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Movie.Genre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Movie.ReleaseYear)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Movie.ReleaseYear)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Movie.Director)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Movie.Director)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Movie.Desc)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Movie.Desc)
+        </dd>
+        <div class="btns">
+            <a asp-page="\Edit" asp-route-id="@Model?.Movie.Id" class="largerBtn">Edit</a>
+            <a asp-page="\Delete" asp-route-id="@Model?.Movie.Id" class="largerBtn">Delete</a>
+            <a asp-page="\MoviesIndex" class="largerBtn">Back to List</a>
+        </div>
+    </dl>
+</div>
