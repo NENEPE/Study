@@ -300,4 +300,7 @@
   <data name="Songs" xml:space="preserve">
     <value>Список пісень</value>
   </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Фільтр</value>
+  </data>
 </root>

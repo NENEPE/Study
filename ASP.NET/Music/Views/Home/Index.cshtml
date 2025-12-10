@@ -1,80 +1,249 @@
-﻿@model IEnumerable<MusicPortal.Models.Song>
+﻿@using MusicPortal.Models
+@model IndexViewModel
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>@Resources.Resource.Title</h1>
-    @if (Context.Session.GetString("UserId") != null)
-    {
-        <a href="@Url.Action("Create", "Song")" class="btn btn-success">@Resources.Resource.CreateSong</a>
-    }
-</div>
+@{
+    ViewData["Title"] = Resources.Resource.Title;
+}
 
-@if (!Model.Any())
-{
-    <div class="alert alert-info text-center">
-        <h4>@Resources.Resource.NoSongs</h4>
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>@Resources.Resource.Title</h1>
         @if (Context.Session.GetString("UserId") != null)
         {
-            <a href="@Url.Action("Create", "Song")" class="btn btn-primary">@Resources.Resource.CreateSong</a>
-        }
-        else
-        {
-            <a href="@Url.Action("Register", "Account")" class="btn btn-primary">@Resources.Resource.Register</a>
+            <a href="@Url.Action("Create", "Song")" class="btn btn-success">
+                <i class="fas fa-plus me-1"></i>@Resources.Resource.CreateSong
+            </a>
         }
     </div>
-}
-else
-{
-    <div class="table-responsive">
-        <table class="table table-striped table-hover">
-            <thead class="table-dark">
-                <tr>
-                    <th>@Resources.Resource.SongTitle</th>
-                    <th>@Resources.Resource.Artist</th>
-                    <th>@Resources.Resource.Genre</th>
-                    <th>@Resources.Resource.UploadedBy</th>
-                    <th>@Resources.Resource.Date</th>
-                    <th>@Resources.Resource.Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var song in Model)
-                {
-                    <tr>
-                        <td>
-                            <strong>@song.Title</strong>
-                            @if (!string.IsNullOrEmpty(song.Description))
-                            {
-                                <br />
-                    
-                                <small class="text-muted">@song.Description</small>
-                            }
-                        </td>
-                        <td>@song.Artist</td>
-                        <td>
-                            <span class="badge bg-secondary">@song.Genre.Name</span>
-                        </td>
-                        <td>@(song.User != null ? song.User.Username : Resources.Resource.Unknown)</td>
-                        <td>@song.UploadDate.ToString("MMM dd, yyyy")</td>
-                        <td>
-                            <a href="@Url.Action("Download", new { id = song.Id })"
-                               class="btn btn-primary btn-sm">@Resources.Resource.Download</a>
-                            @if (Context.Session.GetString("IsAdmin") == "True" ||
-                                                Context.Session.GetString("UserId") == song.UserId.ToString())
-                            {
-                                <form method="post" action="@Url.Action("DeleteSong", "Admin")"
-                                      class="d-inline" onsubmit="return confirm(@Resources.Resource.Question);">
-                                    <input type="hidden" name="id" value="@song.Id" />
-                                    <button type="submit" class="btn btn-danger btn-sm">@Resources.Resource.Delete</button>
-                                </form>
-                            }
-                            <audio controls>
-                                <source src="@song.FilePath">
-                            </audio>
-                        </td>
 
+    @* --- 1. Filter Section (Updated with Icon) --- *@
+    <form method="get" class="row g-3 mb-4 border p-3 rounded bg-light">
+        <div class="col-md-4">
+            <label class="form-label font-weight-bold text-primary">@Resources.Resource.Genre</label>
+            @* We use the SelectList from FilterViewModel *@
+            <select name="genre" asp-items="Model.FilterViewModel.Genres" class="form-select"></select>
+        </div>
+        <div class="col-md-4 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-filter me-1"></i> @Resources.Resource.Filter
+            </button>
+        </div>
+    </form>
+
+    @if (!Model.Songs.Any())
+    {
+        <div class="alert alert-info text-center">
+            <h4>@Resources.Resource.NoSongs</h4>
+            @if (Context.Session.GetString("UserId") != null)
+            {
+                <a href="@Url.Action("Create", "Song")" class="btn btn-primary">@Resources.Resource.CreateSong</a>
+            }
+            else
+            {
+                <a href="@Url.Action("Register", "Account")" class="btn btn-primary">@Resources.Resource.Register</a>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        @* --- 2. Sorting Section with Icons --- *@
+
+                        @* Title Column *@
+                        <th>
+                            <a asp-action="Index"
+                               asp-route-sortOrder="@Model.SortViewModel.TitleSort"
+                               asp-route-genre="@Model.FilterViewModel.SelectedGenre"
+                               class="text-white text-decoration-none d-flex justify-content-between align-items-center">
+                                @Resources.Resource.SongTitle
+                                @if (Model.SortViewModel.Current == SortState.TitleAsc)
+                                {
+                                    <i class="fas fa-sort-up"></i>
+                                }
+                                else if (Model.SortViewModel.Current == SortState.TitleDesc)
+                                {
+                                    <i class="fas fa-sort-down"></i>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-sort text-gray-500" style="opacity:0.3"></i>
+                                }
+                            </a>
+                        </th>
+
+                        @* Artist Column *@
+                        <th>
+                            <a asp-action="Index"
+                               asp-route-sortOrder="@Model.SortViewModel.ArtistSort"
+                               asp-route-genre="@Model.FilterViewModel.SelectedGenre"
+                               class="text-white text-decoration-none d-flex justify-content-between align-items-center">
+                                @Resources.Resource.Artist
+                                @if (Model.SortViewModel.Current == SortState.ArtistAsc)
+                                {
+                                    <i class="fas fa-sort-up"></i>
+                                }
+                                else if (Model.SortViewModel.Current == SortState.ArtistDesc)
+                                {
+                                    <i class="fas fa-sort-down"></i>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-sort text-gray-500" style="opacity:0.3"></i>
+                                }
+                            </a>
+                        </th>
+
+                        @* Genre Column *@
+                        <th>
+                            <a asp-action="Index"
+                               asp-route-sortOrder="@Model.SortViewModel.GenreSort"
+                               asp-route-genre="@Model.FilterViewModel.SelectedGenre"
+                               class="text-white text-decoration-none d-flex justify-content-between align-items-center">
+                                @Resources.Resource.Genre
+                                @if (Model.SortViewModel.Current == SortState.GenreAsc)
+                                {
+                                    <i class="fas fa-sort-up"></i>
+                                }
+                                else if (Model.SortViewModel.Current == SortState.GenreDesc)
+                                {
+                                    <i class="fas fa-sort-down"></i>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-sort text-gray-500" style="opacity:0.3"></i>
+                                }
+                            </a>
+                        </th>
+
+                        @* UploadedBy Column (Not Sortable) *@
+                        <th>
+                            @Resources.Resource.UploadedBy
+                        </th>
+
+                        @* Date Column *@
+                        <th>
+                            <a asp-action="Index"
+                               asp-route-sortOrder="@Model.SortViewModel.DateSort"
+                               asp-route-genre="@Model.FilterViewModel.SelectedGenre"
+                               class="text-white text-decoration-none d-flex justify-content-between align-items-center">
+                                @Resources.Resource.Date
+                                @if (Model.SortViewModel.Current == SortState.DateAsc)
+                                {
+                                    <i class="fas fa-sort-up"></i>
+                                }
+                                else if (Model.SortViewModel.Current == SortState.DateDesc)
+                                {
+                                    <i class="fas fa-sort-down"></i>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-sort text-gray-500" style="opacity:0.3"></i>
+                                }
+                            </a>
+                        </th>
+                        <th>@Resources.Resource.Actions</th>
                     </tr>
+                </thead>
+                <tbody>
+                    @* --- 3. Data Loop (Model.Songs) --- *@
+                    @foreach (var song in Model.Songs)
+                    {
+                        <tr>
+                            <td>
+                                <strong>@song.Title</strong>
+                                @if (!string.IsNullOrEmpty(song.Description))
+                                {
+                                    <br />
+                                    <small class="text-muted">@song.Description</small>
+                                }
+                            </td>
+                            <td>@song.Artist</td>
+                            <td>
+                                <span class="badge bg-secondary">@song.Genre.Name</span>
+                            </td>
+                            <td>@(song.User != null ? song.User.Username : Resources.Resource.Unknown)</td>
+                            <td>@song.UploadDate.ToString("MMM dd, yyyy")</td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <a href="@Url.Action("Download", new { id = song.Id })"
+                                       class="btn btn-primary btn-sm" title="@Resources.Resource.Download">
+                                        <i class="fas fa-download"></i>
+                                    </a>
+
+                                    @if (Context.Session.GetString("IsAdmin") == "True" ||
+                                                                Context.Session.GetString("UserId") == song.UserId.ToString())
+                                    {
+                                        <form method="post" action="@Url.Action("DeleteSong", "Admin")"
+                                              class="d-inline" onsubmit="return confirm('@Resources.Resource.Question');">
+                                            <input type="hidden" name="id" value="@song.Id" />
+                                            <button type="submit" class="btn btn-danger btn-sm" title="@Resources.Resource.Delete">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    }
+                                </div>
+                                <div class="mt-2">
+                                    <audio controls style="height: 30px; width: 100%">
+                                        <source src="@song.FilePath">
+                                    </audio>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @* --- 4. Pagination Section (Updated with Icons) --- *@
+        <nav aria-label="Page navigation" class="mt-4">
+            <ul class="pagination justify-content-center">
+                @if (Model.PageViewModel.HasPreviousPage)
+                {
+                    <li class="page-item">
+                        <a asp-action="Index"
+                           asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+                           asp-route-sortOrder="@Model.SortViewModel.Current"
+                           asp-route-genre="@Model.FilterViewModel.SelectedGenre"
+                           class="page-link">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    </li>
                 }
-            </tbody>
-        </table>
-    </div>
-}
+                else
+                {
+                    <li class="page-item disabled">
+                        <span class="page-link"><i class="fas fa-chevron-left"></i></span>
+                    </li>
+                }
+
+                <li class="page-item disabled">
+                    <span class="page-link text-dark">
+                        @Model.PageViewModel.PageNumber / @Model.PageViewModel.TotalPages
+                    </span>
+                </li>
+
+                @if (Model.PageViewModel.HasNextPage)
+                {
+                    <li class="page-item">
+                        <a asp-action="Index"
+                           asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+                           asp-route-sortOrder="@Model.SortViewModel.Current"
+                           asp-route-genre="@Model.FilterViewModel.SelectedGenre"
+                           class="page-link">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item disabled">
+                        <span class="page-link"><i class="fas fa-chevron-right"></i></span>
+                    </li>
+                }
+            </ul>
+        </nav>
+    }
+</div>

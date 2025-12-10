@@ -32,8 +32,10 @@ namespace MusicPortal.Controllers
             _authService = authService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? genre, int page = 1, SortState sortOrder = SortState.DateDesc)
         {
+            int pageSize = 2;
+
             if (Request.Cookies["login"] != null && string.IsNullOrEmpty(HttpContext.Session.GetString("Username")))
             {
                 string username = Request.Cookies["login"]!;
@@ -42,18 +44,48 @@ namespace MusicPortal.Controllers
                 {
                     _authService.UserSet(user);
                 }
-            };
+            }
+            ;
 
             HttpContext.Session.SetString("path", Request.Path);
-            var genres = (await _genreRepository.GetAllAsync()).ToList();
 
-            var songs = (await _songRepository.GetAllAsync())
-                .OrderByDescending(s => s.UploadDate)
-                .ToList();
+            var songs = await _songRepository.GetAllAsync();
+            var genres = await _genreRepository.GetAllAsync();
 
-            ViewBag.Genres = genres;
+            if (genre != null && genre != 0)
+            {
+                songs = songs.Where(p => p.GenreId == genre);
+            }
 
-            return View(songs);
+            songs = sortOrder switch
+            {
+                SortState.TitleAsc => songs.OrderBy(s => s.Title),
+                SortState.TitleDesc => songs.OrderByDescending(s => s.Title),
+                SortState.ArtistAsc => songs.OrderBy(s => s.Artist),
+                SortState.ArtistDesc => songs.OrderByDescending(s => s.Artist),
+                SortState.GenreAsc => songs.OrderBy(s => s.Genre.Name),
+                SortState.GenreDesc => songs.OrderByDescending(s => s.Genre.Name),
+                SortState.DateAsc => songs.OrderBy(s => s.UploadDate),
+                SortState.DateDesc => songs.OrderByDescending(s => s.UploadDate),
+                _ => songs.OrderByDescending(s => s.UploadDate),
+            };
+
+            var count = songs.Count();
+            var items = songs.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            var filterViewModel = new FilterViewModel(genres.ToList(), genre ?? 0);
+            var sortViewModel = new SortViewModel(sortOrder);
+            var pageViewModel = new PageViewModel(count, page, pageSize);
+
+
+            var viewModel = new IndexViewModel(
+                items,
+                pageViewModel,
+                filterViewModel,
+                sortViewModel
+            );
+
+            return View(viewModel);
         }
 
         public async Task<IActionResult> Download(int id)

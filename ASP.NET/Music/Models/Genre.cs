@@ -10,7 +10,7 @@ namespace MusicPortal.Models
         [StringLength(50, ErrorMessage = "Genre name cannot exceed 50 characters")]
         public string Name { get; set; }
 
-        [StringLength(500, ErrorMessage = "Description cannot exceed 500 characters")]
+        [StringLength(500, ErrorMessageResourceType = typeof(Resources.Resource), ErrorMessageResourceName = "Actions")] 
         public string Description { get; set; }
 
         public virtual ICollection<Song> Songs { get; set; } = new List<Song>();

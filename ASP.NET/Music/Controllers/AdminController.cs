@@ -155,11 +155,43 @@ namespace MusicPortal.Controllers
 
             return RedirectToAction("Genres");
         }
-        public async Task<IActionResult> Songs()
+        public async Task<IActionResult> Songs(int? genre, int page = 1, SortState sortOrder = SortState.DateDesc)
         {
             if (!IsAdmin()) return RedirectToAction("Login", "Account");
-            var songs = await _songRepository.GetAllAsync();
-            return View(songs);
+
+            int pageSize = 5;
+
+            var songsQuery = await _songRepository.GetAllAsync();
+            var genres = await _genreRepository.GetAllAsync();
+
+            if (genre != null && genre != 0)
+            {
+                songsQuery = songsQuery.Where(p => p.GenreId == genre);
+            }
+
+            // 4. Sort
+            songsQuery = sortOrder switch
+            {
+                SortState.TitleAsc => songsQuery.OrderBy(s => s.Title),
+                SortState.TitleDesc => songsQuery.OrderByDescending(s => s.Title),
+                SortState.ArtistAsc => songsQuery.OrderBy(s => s.Artist),
+                SortState.ArtistDesc => songsQuery.OrderByDescending(s => s.Artist),
+                SortState.GenreAsc => songsQuery.OrderBy(s => s.Genre.Name),
+                SortState.GenreDesc => songsQuery.OrderByDescending(s => s.Genre.Name),
+                SortState.DateAsc => songsQuery.OrderBy(s => s.UploadDate),
+                _ => songsQuery.OrderByDescending(s => s.UploadDate),
+            };
+
+            var count = songsQuery.Count();
+            var items = songsQuery.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            var pageViewModel = new PageViewModel(count, page, pageSize);
+            var filterViewModel = new FilterViewModel(genres.ToList(), genre ?? 0);
+            var sortViewModel = new SortViewModel(sortOrder);
+
+            var viewModel = new IndexViewModel(items, pageViewModel, filterViewModel, sortViewModel);
+
+            return View(viewModel);
         }
         [HttpPost]
         public async Task<IActionResult> DeleteSong(int id)
